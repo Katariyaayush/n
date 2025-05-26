@@ -1,0 +1,150 @@
+<program>        ::= { <external_declaration> }
+
+<external_declaration> ::= <function_definition>
+                       | <declaration>
+
+<function_definition> ::= <type_specifier> <declarator> <compound_statement>
+
+<declaration>        ::= <type_specifier> <init_declarator_list> ";"
+
+<type_specifier>     ::= "void" | "char" | "short" | "int" | "long" | "float" | "double"
+                       | "signed" | "unsigned" | "_Bool" | "_Complex" | "_Imaginary"
+                       | <struct_or_union_specifier>
+                       | <enum_specifier>
+                       | <typedef_name>
+
+<declarator>         ::= <pointer> <direct_declarator>
+                       | <direct_declarator>
+
+<direct_declarator>  ::= <identifier>
+                       | "(" <declarator> ")"
+                       | <direct_declarator> "[" <constant_expression> "]"
+                       | <direct_declarator> "(" <parameter_list> ")"
+                       | <direct_declarator> "(" <identifier_list> ")"
+                       | <direct_declarator> "(" ")"
+
+<pointer>           ::= "*" { "*" }
+
+<parameter_list>    ::= <parameter_declaration> { "," <parameter_declaration> }
+
+<parameter_declaration> ::= <type_specifier> <declarator>
+                        | <type_specifier> <abstract_declarator>
+                        | <type_specifier>
+
+<identifier_list>   ::= <identifier> { "," <identifier> }
+
+<compound_statement> ::= "{" { <declaration> } { <statement> } "}"
+
+<statement>         ::= <expression_statement>
+                     | <compound_statement>
+                     | <selection_statement>
+                     | <iteration_statement>
+                     | <jump_statement>
+
+<expression_statement> ::= <expression> ";"
+                       | ";"
+
+<selection_statement> ::= "if" "(" <expression> ")" <statement>
+                       | "if" "(" <expression> ")" <statement> "else" <statement>
+                       | "switch" "(" <expression> ")" <statement>
+
+<iteration_statement> ::= "while" "(" <expression> ")" <statement>
+                       | "do" <statement> "while" "(" <expression> ")" ";"
+                       | "for" "(" <expression> ";" <expression> ";" <expression> ")" <statement>
+
+<jump_statement>     ::= "goto" <identifier> ";"
+                      | "continue" ";"
+                      | "break" ";"
+                      | "return" <expression> ";"
+                      | "return" ";"
+
+<expression>        ::= <assignment_expression> { "," <assignment_expression> }
+
+<assignment_expression> ::= <conditional_expression>
+                        | <unary_expression> <assignment_operator> <assignment_expression>
+
+<assignment_operator> ::= "=" | "*=" | "/=" | "%=" | "+=" | "-=" | "<<=" | ">>="
+                       | "&=" | "^=" | "|="
+
+<conditional_expression> ::= <logical_or_expression>
+                         | <logical_or_expression> "?" <expression> ":" <conditional_expression>
+
+<constant_expression> ::= <conditional_expression>
+
+<logical_or_expression> ::= <logical_and_expression>
+                        | <logical_or_expression> "||" <logical_and_expression>
+
+<logical_and_expression> ::= <inclusive_or_expression>
+                         | <logical_and_expression> "&&" <inclusive_or_expression>
+
+<inclusive_or_expression> ::= <exclusive_or_expression>
+                          | <inclusive_or_expression> "|" <exclusive_or_expression>
+
+<exclusive_or_expression> ::= <and_expression>
+                          | <exclusive_or_expression> "^" <and_expression>
+
+<and_expression>     ::= <equality_expression>
+                      | <and_expression> "&" <equality_expression>
+
+<equality_expression> ::= <relational_expression>
+                       | <equality_expression> "==" <relational_expression>
+                       | <equality_expression> "!=" <relational_expression>
+
+<relational_expression> ::= <shift_expression>
+                        | <relational_expression> "<" <shift_expression>
+                        | <relational_expression> ">" <shift_expression>
+                        | <relational_expression> "<=" <shift_expression>
+                        | <relational_expression> ">=" <shift_expression>
+
+<shift_expression>   ::= <additive_expression>
+                      | <shift_expression> "<<" <additive_expression>
+                      | <shift_expression> ">>" <additive_expression>
+
+<additive_expression> ::= <multiplicative_expression>
+                       | <additive_expression> "+" <multiplicative_expression>
+                       | <additive_expression> "-" <multiplicative_expression>
+
+<multiplicative_expression> ::= <cast_expression>
+                            | <multiplicative_expression> "*" <cast_expression>
+                            | <multiplicative_expression> "/" <cast_expression>
+                            | <multiplicative_expression> "%" <cast_expression>
+
+<cast_expression>    ::= <unary_expression>
+                      | "(" <type_name> ")" <cast_expression>
+
+<unary_expression>   ::= <postfix_expression>
+                      | "++" <unary_expression>
+                      | "--" <unary_expression>
+                      | <unary_operator> <cast_expression>
+                      | "sizeof" <unary_expression>
+                      | "sizeof" "(" <type_name> ")"
+
+<unary_operator>     ::= "&" | "*" | "+" | "-" | "~" | "!"
+
+<postfix_expression> ::= <primary_expression>
+                      | <postfix_expression> "[" <expression> "]"
+                      | <postfix_expression> "(" <argument_expression_list> ")"
+                      | <postfix_expression> "(" ")"
+                      | <postfix_expression> "." <identifier>
+                      | <postfix_expression> "->" <identifier>
+                      | <postfix_expression> "++"
+                      | <postfix_expression> "--"
+
+<primary_expression> ::= <identifier>
+                      | <constant>
+                      | <string>
+                      | "(" <expression> ")"
+
+<argument_expression_list> ::= <assignment_expression>
+                            | <argument_expression_list> "," <assignment_expression>
+
+<constant>          ::= <integer_constant>
+                     | <character_constant>
+                     | <floating_constant>
+                     | <enumeration_constant>
+
+<identifier>        ::= <letter> { <letter> | <digit> | "_" }
+
+<letter>           ::= "a" .. "z" | "A" .. "Z"
+
+<digit>            ::= "0" .. "9" 
